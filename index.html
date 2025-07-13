@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kufizim Të Dhënash</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(236, 71, 99);
+      font-family: Arial, sans-serif;
+      color: white;
+      flex-direction: column;
+    }
+
+    #fetchBtn {
+      background-color: #e72447;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 35px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+    }
+
+    #fetchBtn:hover {
+      background-color: #ff1a4d;
+    }
+
+    #status {
+      margin-top: 25px;
+      font-size: 20px;
+      text-align: center;
+      min-height: 80px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="fetchBtn">Merr të dhënat</button>
+  <p id="status"></p>
+
+  <script>
+    const button = document.getElementById('fetchBtn');
+    const statusEl = document.getElementById('status');
+
+    const userData = {
+      emri: "Tuana",
+      mbiemri: "Gjigolli",
+      mosha: 13,
+      email: "tuana.gjigolli@gmail.com"
+    };
+
+    button.addEventListener('click', async () => {
+      statusEl.textContent = "Duke u marrë të dhënat...";
+
+      await new Promise(resolve => setTimeout(resolve, 30000)); // 30 sekonda
+
+      // Merr çelësat dhe vlerat, por kufizo në 3 të parat
+      const entries = Object.entries(userData).slice(0, 3);
+
+      // Ndërto tekstin e shfaqjes
+      const text = entries.map(([key, value]) => {
+        // Shto 'vjeç' vetëm te mosha
+        if(key === 'mosha') {
+          return `Mosha: ${value} vjeç`;
+        }
+        // Gjithmonë shkruaj me shkronjë të madhe çelësin (emri, mbiemri, email)
+        const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
+        return `${formattedKey}: ${value}`;
+      }).join('\n');
+
+      statusEl.textContent = text;
+    });
+  </script>
+
+</body>
+</html>
